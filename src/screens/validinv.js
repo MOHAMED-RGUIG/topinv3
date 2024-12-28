@@ -126,10 +126,11 @@ useEffect(() => {
   const handleValidate = (finalValue, stocou) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [stocou]: finalValue, // Update the specific item’s quantity based on stocou
+      [stocou]: (Number(prevQuantities[stocou] || 0) + Number(finalValue)), // Ajoute la nouvelle valeur à l'existante
     }));
-    setIsCalculatorOpen(false); // Close the calculator after validation
+    setIsCalculatorOpen(false); // Ferme la calculatrice après validation
   };
+
   const handleInputChange = (e) => {
       const value = e.target.value;
       setITMREF_0(value);
@@ -242,6 +243,8 @@ useEffect(() => {
       setLocalData(updatedData);
       closePopup();
     };
+
+
     useEffect(() => {
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
@@ -439,34 +442,41 @@ readOnly={EANCOD_0.trim() !== ''}
   </div>
   <label>Quantité</label>
   <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
-  <button
-    type="button" className='calculator'
-    onClick={() => toggleCalculator(item.STOCOU_0)}
-  >
-    
-  </button>
-        <input
+  
+  <input
   type="number"
-  value={quantities[item.STOCOU_0] || ""} // Default to empty if no value exists
+  value={quantities[item.STOCOU_0] || ""} // Défaut à vide si aucune valeur
   onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
   className="form-control mx-auto border p-1"
   style={{ width: "90%", fontSize: "13px" }}
 />
 
+
 {isCalculatorOpen && (
   <Calculator
     onValidate={(finalValue, stocou) => handleValidate(finalValue, stocou)}
-    stocou={calculatorItem} // Pass the current item's identifier
+    stocou={calculatorItem} 
+    
+    // Pass the current item's identifier
   />
 )}
-  <button
+
+<button
+    type="button" className='calculator pt-4 mt-4'
+    onClick={() => toggleCalculator(item.STOCOU_0)}
+    style={{ width: "15%", height:"60px",fontSize: "15px" }}
+  >
+    
+  </button>
+  {/*<button
     type='button'
     onClick={() => openPopup(item.STOCOU_0)}
     className="btn-plus bg-red-500 text-white"
     style={{ width: "10%", marginLeft: "8px", padding: "0" }}
   >
     +
-  </button>
+  </button> */}
+  
 </div>
 
 
