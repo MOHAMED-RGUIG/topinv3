@@ -5,7 +5,7 @@ import Loading from '../components/Loading';
 import Error from '../components/Error';
 
 export default function Loginscreen() {
-  const [email, setemail] = useState('');
+  const [username, setusername] = useState('');
   const [password, setpassword] = useState('');
   const loginstate = useSelector(state => state.loginUserReducer);
   const { loading, error } = loginstate;
@@ -25,7 +25,7 @@ export default function Loginscreen() {
 }, []);
 
   function login() {
-    const user = { email, password };
+    const user = { username, password };
     console.log('Login attempt:', user); // Log the login attempt
     dispatch(loginUser(user));
   }
@@ -50,7 +50,7 @@ export default function Loginscreen() {
 
           <div className='container '>
             <input required type='email' placeholder='Utilisateur' className='form-control'
-              value={email} onChange={(e) => { setemail(e.target.value) }}
+              value={username} onChange={(e) => { setusername(e.target.value) }}
             />
             <input required type='password' placeholder='Mot de passe' className='form-control'
               value={password} onChange={(e) => { setpassword(e.target.value) }}
