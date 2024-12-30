@@ -16,7 +16,7 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData }) {
     const dispatch = useDispatch();
 
     function tokenHandler() {
-        if (REFINV_0 && ITMREF_0 && localData.length > 0) {
+        if (REFINV_0 && ITMREF_0 ) {
             const payload = {
                 REFINV_0,
                 ITMREF_0,
