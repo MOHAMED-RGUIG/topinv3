@@ -77,7 +77,7 @@ function Validinv() {
     const [quantity, setQuantity] = useState("");
     const [quantities, setQuantities] = useState({});
     const [calculatorItem, setCalculatorItem] = useState(null);
-    
+    const [QTYINV_0, setQTYINV_0] = useState({});
 
 
     const [isScannerActive, setIsScannerActive] = useState(false);
