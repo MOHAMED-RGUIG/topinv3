@@ -10,7 +10,7 @@ import   QrReader  from "react-qr-barcode-scanner";
 import { Html5Qrcode } from "html5-qrcode";
 import { FaCalculator } from "react-icons/fa";
 //import { Html5QrcodeScanner } from "html5-qrcode";
-/*
+
 function Calculator({ onValidate, stocou, initialValue }) {
   const [value, setValue] = useState(initialValue || ""); // Set initial value for the input field
 
@@ -60,7 +60,7 @@ function Calculator({ onValidate, stocou, initialValue }) {
       </button>
     </div>
   );
-}*/
+}
 
 
 function Validinv() {
@@ -123,13 +123,13 @@ useEffect(() => {
       if (value.trim().length >= 3) {
           dispatch(getFilteredValidInv(value));}
   }, 500);
-  /*const handleValidate = (finalValue, stocou) => {
+  const handleValidate = (finalValue, stocou) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [stocou]: (Number(prevQuantities[stocou] || 0) + Number(finalValue)), // Ajoute la nouvelle valeur à l'existante
     }));
     setIsCalculatorOpen(false); // Ferme la calculatrice après validation
-  };*/
+  };
 const handlechangeresult = (e) => {
         const value = e.target.value;
         setScanResult(value);
@@ -189,7 +189,7 @@ const handleInputCodeChange = (e) => {
   };
   const stockData = validinv?.stockData || [];
 const itemMasterData = validinv?.itemMasterData || [];
-/*useEffect(() => {
+useEffect(() => {
   if (validinv) {
     const stockDataArray = validinv.stockData || [];
     const itemMasterDataArray = validinv.itemMasterData || [];
@@ -206,9 +206,9 @@ const itemMasterData = validinv?.itemMasterData || [];
   } else {
     console.error("Both stockData and itemMasterData are undefined or not arrays", validinv);
   }
-}, [validinv]);*/
+}, [validinv]);
 
-   useEffect(() => {
+   /*useEffect(() => {
       if (validinv) {
         // Copier les données pour un état local modifiable
         setLocalData(validinv.map((item) => ({ ...item, Qt: item.Qt || '' })));
@@ -219,10 +219,10 @@ const itemMasterData = validinv?.itemMasterData || [];
         // Copier les données pour un état local modifiable
         setLocalData(validinvcode.map((item) => ({ ...item, Qt: item.Qt || '' })));
       };     
-    }, [validinvcode]);
+    }, [validinvcode]);*/
 
 
-    /*useEffect(() => {
+    useEffect(() => {
       if (validinvcode) {
         // Copier les données pour un état local modifiable
         setLocalData(validinvcode.map((item) => ({ ...item, Qt: item.Qt || '' })));
@@ -230,8 +230,8 @@ const itemMasterData = validinv?.itemMasterData || [];
     }, [validinvcode]);
     useEffect(() => {
       dispatch(getInv());
-  }, [dispatch]);*/
-/*
+  }, [dispatch]);
+
   const handleQtChange = (stocou, value) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -265,7 +265,7 @@ const itemMasterData = validinv?.itemMasterData || [];
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
     }
-}, [scanResult]);*/
+}, [scanResult]);
  const handleQtChange = (id, value) => {
       if (!isNaN(value) && value >= 0) {
         const updatedData = localData.map((item) =>
