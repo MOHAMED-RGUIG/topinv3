@@ -119,11 +119,11 @@ useEffect(() => {
             }
         };
     }, [isScannerActive]);
- /*   const debouncedDispatch = debounce((value) => {
+  const debouncedDispatch = debounce((value) => {
       if (value.trim().length >= 3) {
           dispatch(getFilteredValidInv(value));}
   }, 500);
-  const handleValidate = (finalValue, stocou) => {
+  /*const handleValidate = (finalValue, stocou) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [stocou]: (Number(prevQuantities[stocou] || 0) + Number(finalValue)), // Ajoute la nouvelle valeur à l'existante
