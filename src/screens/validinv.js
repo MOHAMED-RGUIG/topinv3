@@ -10,7 +10,7 @@ import   QrReader  from "react-qr-barcode-scanner";
 import { Html5Qrcode } from "html5-qrcode";
 import { FaCalculator } from "react-icons/fa";
 //import { Html5QrcodeScanner } from "html5-qrcode";
-
+/*
 function Calculator({ onValidate, stocou, initialValue }) {
   const [value, setValue] = useState(initialValue || ""); // Set initial value for the input field
 
@@ -60,7 +60,7 @@ function Calculator({ onValidate, stocou, initialValue }) {
       </button>
     </div>
   );
-}
+}*/
 
 
 function Validinv() {
@@ -119,7 +119,7 @@ useEffect(() => {
             }
         };
     }, [isScannerActive]);
-    const debouncedDispatch = debounce((value) => {
+ /*   const debouncedDispatch = debounce((value) => {
       if (value.trim().length >= 3) {
           dispatch(getFilteredValidInv(value));}
   }, 500);
@@ -129,7 +129,7 @@ useEffect(() => {
       [stocou]: (Number(prevQuantities[stocou] || 0) + Number(finalValue)), // Ajoute la nouvelle valeur à l'existante
     }));
     setIsCalculatorOpen(false); // Ferme la calculatrice après validation
-  };
+  };*/
 
   const handleInputChange = (e) => {
       const value = e.target.value;
@@ -146,11 +146,11 @@ useEffect(() => {
     if (value.trim().length >= 3) {
         dispatch(getFilteredValidInvByCode(value));}
 }, 500);
-const handlechangeresult = (e) => {
+/*const handlechangeresult = (e) => {
         const value = e.target.value;
         setScanResult(value);
         setEANCOD_0(value);
-    };
+    };*/
  //la derniere   
 const handleInputCodeChange = (e) => {
     const value = e.target.value;
@@ -185,7 +185,7 @@ const handleInputCodeChange = (e) => {
   };
   const stockData = validinv?.stockData || [];
 const itemMasterData = validinv?.itemMasterData || [];
-useEffect(() => {
+/*useEffect(() => {
   if (validinv) {
     const stockDataArray = validinv.stockData || [];
     const itemMasterDataArray = validinv.itemMasterData || [];
@@ -202,12 +202,23 @@ useEffect(() => {
   } else {
     console.error("Both stockData and itemMasterData are undefined or not arrays", validinv);
   }
-}, [validinv]);
+}, [validinv]);*/
 
-
-
-
+   useEffect(() => {
+      if (validinv) {
+        // Copier les données pour un état local modifiable
+        setLocalData(validinv.map((item) => ({ ...item, Qt: item.Qt || '' })));
+      };     
+    }, [validinv]);
     useEffect(() => {
+      if (validinvcode) {
+        // Copier les données pour un état local modifiable
+        setLocalData(validinvcode.map((item) => ({ ...item, Qt: item.Qt || '' })));
+      };     
+    }, [validinvcode]);
+
+
+    /*useEffect(() => {
       if (validinvcode) {
         // Copier les données pour un état local modifiable
         setLocalData(validinvcode.map((item) => ({ ...item, Qt: item.Qt || '' })));
@@ -215,7 +226,8 @@ useEffect(() => {
     }, [validinvcode]);
     useEffect(() => {
       dispatch(getInv());
-  }, [dispatch]);
+  }, [dispatch]);*/
+/*
   const handleQtChange = (stocou, value) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -245,6 +257,40 @@ useEffect(() => {
     };
 
 
+    useEffect(() => {
+    if (scanResult) {
+        handleInputCodeChange({ target: { value: scanResult } });
+    }
+}, [scanResult]);*/
+ const handleQtChange = (id, value) => {
+      if (!isNaN(value) && value >= 0) {
+        const updatedData = localData.map((item) =>
+          item.STOCOU_0 === id ? { ...item, Qt: Number(value) } : item
+        );
+        setLocalData(updatedData);
+      } else {
+        console.log("Valeur invalide pour Qt.");}};
+    // Gestion du popup
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [selectedItemId, setSelectedItemId] = useState(null);
+    const [additionalQt, setAdditionalQt] = useState(""); 
+    const openPopup = (id) => {
+      setSelectedItemId(id);
+      setIsPopupOpen(true);};  
+
+    const closePopup = () => {
+      setIsPopupOpen(false);
+      setAdditionalQt("");};  
+
+    const handleAddQt = () => {
+      const updatedData = localData.map((item) =>
+        item.STOCOU_0 === selectedItemId
+          ? { ...item, Qt: item.Qt + Number(additionalQt) }
+          : item
+      );
+      setLocalData(updatedData);
+      closePopup();
+    };
     useEffect(() => {
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
@@ -440,7 +486,7 @@ readOnly={EANCOD_0.trim() !== ''}
           style={{ width: "90%", fontSize: "13px" }}
         />
   </div>
-  <label>Quantité</label>
+{/*<label>Quantité</label>
   <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
   
   <input
@@ -477,6 +523,24 @@ readOnly={EANCOD_0.trim() !== ''}
     +
   </button> 
   
+</div>*/}
+<label>Quantité</label>
+  <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
+  <input
+    type="number"
+    value={item.Qt}
+    onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
+    className="form-control mx-auto border p-1"
+    style={{ width: "90%", fontSize: "13px" }}
+  />
+  <button
+    type='button'
+    onClick={() => openPopup(item.STOCOU_0)}
+    className="btn-plus bg-red-500 text-white"
+    style={{ width: "10%", marginLeft: "8px", padding: "0" }}
+  >
+    +
+  </button>
 </div>
 
 
