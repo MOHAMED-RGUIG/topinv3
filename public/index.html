@@ -45,5 +45,18 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+        function calculer() {
+            try {
+                var expression = document.getElementById("expression").value;
+                // Utilisation de eval pour évaluer l'expression
+                var resultat = eval(expression);
+                document.getElementById("resultat").innerText = "Résultat : " + resultat;
+            } catch (error) {
+                document.getElementById("resultat").innerText = "Erreur : Expression invalide";
+            }
+        }
+    </script>
+
   </body>
 </html>
