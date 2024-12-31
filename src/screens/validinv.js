@@ -298,8 +298,11 @@ useEffect(() => {
     };*/
 const handleAddQt = () => {
   try {
-    // Évaluer l'expression saisie dans l'input
+    console.log("Expression saisie :", additionalQt);
+
+    // Évaluer l'expression saisie
     const evaluatedValue = eval(additionalQt);
+    console.log("Résultat évalué :", evaluatedValue);
 
     if (isNaN(evaluatedValue)) {
       alert("Veuillez entrer une quantité valide.");
@@ -315,9 +318,11 @@ const handleAddQt = () => {
     setLocalData(updatedData);
     closePopup();
   } catch (error) {
+    console.error("Erreur lors de l'évaluation :", error);
     alert("Expression invalide. Veuillez réessayer.");
   }
 };
+
 
 
     useEffect(() => {
