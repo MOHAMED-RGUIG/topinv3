@@ -130,7 +130,11 @@ useEffect(() => {
     }));
     setIsCalculatorOpen(false); // Ferme la calculatrice après validation
   };*/
-
+const handlechangeresult = (e) => {
+        const value = e.target.value;
+        setScanResult(value);
+        setEANCOD_0(value);
+    };
   const handleInputChange = (e) => {
       const value = e.target.value;
       setITMREF_0(value);
