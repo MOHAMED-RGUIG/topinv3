@@ -239,7 +239,7 @@ useEffect(() => {
     }));
   };*/
     // Gestion du popup
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
+  /*const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [additionalQt, setAdditionalQt] = useState(""); 
     const openPopup = (id) => {
@@ -249,7 +249,7 @@ useEffect(() => {
     const closePopup = () => {
       setIsPopupOpen(false);
       setAdditionalQt("");};  
-
+*/
     /*const handleAddQt = () => {
       const updatedData = localData.map((item) =>
         item.STOCOU_0 === selectedItemId
