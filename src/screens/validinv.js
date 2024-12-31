@@ -232,12 +232,12 @@ useEffect(() => {
       dispatch(getInv());
   }, [dispatch]);
 
-  const handleQtChange = (stocou, value) => {
+  /*const handleQtChange = (stocou, value) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [stocou]: value, // Update the value for the specific item
     }));
-  };
+  };*/
     // Gestion du popup
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -250,7 +250,7 @@ useEffect(() => {
       setIsPopupOpen(false);
       setAdditionalQt("");};  
 
-    const handleAddQt = () => {
+    /*const handleAddQt = () => {
       const updatedData = localData.map((item) =>
         item.STOCOU_0 === selectedItemId
           ? { ...item, Qt: item.Qt + Number(additionalQt) }
@@ -259,7 +259,7 @@ useEffect(() => {
       setLocalData(updatedData);
       closePopup();
     };
-
+*/
 
     useEffect(() => {
     if (scanResult) {
