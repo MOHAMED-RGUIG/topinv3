@@ -468,14 +468,14 @@ readOnly={EANCOD_0.trim() !== ''}
   >
     
   </button>
-  {/*<button
+  <button
     type='button'
     onClick={() => openPopup(item.STOCOU_0)}
     className="btn-plus bg-red-500 text-white"
     style={{ width: "10%", marginLeft: "8px", padding: "0" }}
   >
     +
-  </button> */}
+  </button> 
   
 </div>
 
