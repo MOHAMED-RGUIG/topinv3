@@ -289,7 +289,7 @@ useEffect(() => {
     const handleAddQt = () => {
       const updatedData = localData.map((item) =>
         item.STOCOU_0 === selectedItemId
-          ? { ...item, Qt: item.Qt + eval(Number(additionalQt)) }
+          ? { ...item, Qt: item.Qt + eval(Number(additionalQt).toString()) }
           : item
       );
       setLocalData(updatedData);
