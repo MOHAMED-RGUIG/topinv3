@@ -289,12 +289,14 @@ useEffect(() => {
     const handleAddQt = () => {
       const updatedData = localData.map((item) =>
         item.STOCOU_0 === selectedItemId
-          ? { ...item, Qt: item.Qt + Number(additionalQt) }
+          ? { ...item, Qt: item.Qt + eval(Number(additionalQt)) }
           : item
       );
       setLocalData(updatedData);
       closePopup();
     };
+
+
     useEffect(() => {
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
@@ -569,6 +571,7 @@ readOnly={EANCOD_0.trim() !== ''}
       <input
         type="number"
         placeholder="Entrez une quantité"
+id="expression"
         className="form-control mb-4"
         value={additionalQt}
         onChange={(e) => setAdditionalQt(e.target.value)}
