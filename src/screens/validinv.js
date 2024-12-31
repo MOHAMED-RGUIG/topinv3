@@ -266,6 +266,7 @@ useEffect(() => {
         handleInputCodeChange({ target: { value: scanResult } });
     }
 }, [scanResult]);
+  
  const handleQtChange = (id, value) => {
       if (!isNaN(value) && value >= 0) {
         const updatedData = localData.map((item) =>
@@ -285,7 +286,7 @@ useEffect(() => {
     const closePopup = () => {
       setIsPopupOpen(false);
       setAdditionalQt("");};  
-
+/*
     const handleAddQt = () => {
       const updatedData = localData.map((item) =>
         item.STOCOU_0 === selectedItemId
@@ -294,7 +295,7 @@ useEffect(() => {
       );
       setLocalData(updatedData);
       closePopup();
-    };
+    };*/
 
 
     useEffect(() => {
