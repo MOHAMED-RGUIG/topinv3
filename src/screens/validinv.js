@@ -424,7 +424,8 @@ const handleAddQt = () => {
     const labels = {
       TSICOD_0: 'Famille',
       TSICOD_1: 'Sous Famille',
-      ITMDES1_0: 'Désignation'
+      ITMDES1_0: 'Désignation',
+      EANCOD_0:'code'
     };
 
     return Object.entries(item).map(([key, value]) => {
