@@ -183,8 +183,8 @@ const handleInputCodeChange = (e) => {
     // Ajouter la nouvelle ligne en haut
     setLocalData([newRow, ...localData]);
   };
-   const deleteRow = (id) => {
-    const updatedData = localData.filter(row => row.STOCOU_0 !== id);
+ const deleteRow = (id) => {
+    const updatedData = localData.filter((item) => item.STOCOU_0 !== id);
     setLocalData(updatedData);
   };
   const stockData = validinv?.stockData || [];
@@ -648,6 +648,14 @@ readOnly={EANCOD_0.trim() !== ''}
 
 <div>
 
+<button
+          type="button"
+          onClick={() => deleteRow(item.STOCOU_0)}
+          className="btn10 btn-danger text-white px-3 py-1 rounded mx-auto"
+          style={{ width: "10px" }}
+        >
+          x
+        </button>
 
 </div>
 
