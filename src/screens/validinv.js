@@ -296,6 +296,7 @@ useEffect(() => {
       setLocalData(updatedData);
       closePopup();
     };*/
+  /*
 const handleAddQt = () => {
   try {
     console.log("Expression saisie :", additionalQt);
@@ -321,8 +322,33 @@ const handleAddQt = () => {
     console.error("Erreur lors de l'évaluation :", error);
     alert("Expression invalide. Veuillez réessayer.");
   }
-};
+};*/
 
+const handleAddQt = () => {
+  try {
+    // Évaluer l'expression saisie dans l'input
+    const evaluatedValue = eval(additionalQt);
+
+    // Vérification si le résultat est un nombre
+    if (isNaN(evaluatedValue)) {
+      alert("Veuillez entrer une quantité valide ou une expression mathématique.");
+      return;
+    }
+
+    // Mettre à jour les données locales avec la nouvelle quantité
+    const updatedData = localData.map((item) =>
+      item.STOCOU_0 === selectedItemId
+        ? { ...item, Qt: item.Qt + Number(evaluatedValue) }
+        : item
+    );
+
+    setLocalData(updatedData); // Mise à jour de l'état
+    closePopup(); // Fermer la popup
+  } catch (error) {
+    // Gestion des erreurs
+    alert("Expression invalide. Veuillez réessayer.");
+  }
+};
 
 
     useEffect(() => {
