@@ -327,18 +327,18 @@ const handleAddQt = () => {
 const handleAddQt = () => {
   try {
     // Évaluer l'expression saisie dans l'input
-    const evaluatedValue = eval(additionalQt);
+    const evaluatedValue = eval(additionalQt.trim());
 
     // Vérification si le résultat est un nombre
-    if (isNaN(evaluatedValue)) {
-      alert("Veuillez entrer une quantité valide ou une expression mathématique.");
+    if (typeof evaluatedValue !== "number" || isNaN(evaluatedValue)) {
+      alert("Veuillez entrer une expression mathématique valide.");
       return;
     }
 
     // Mettre à jour les données locales avec la nouvelle quantité
     const updatedData = localData.map((item) =>
       item.STOCOU_0 === selectedItemId
-        ? { ...item, Qt: item.Qt + Number(evaluatedValue) }
+        ? { ...item, Qt: item.Qt + evaluatedValue }
         : item
     );
 
@@ -349,6 +349,7 @@ const handleAddQt = () => {
     alert("Expression invalide. Veuillez réessayer.");
   }
 };
+
 
 
     useEffect(() => {
