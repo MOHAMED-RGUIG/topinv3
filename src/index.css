@@ -154,7 +154,22 @@ border: none !important;
   letter-spacing: 1px !important;
   margin-top: 30px !important;
   }
-
+  .btn10 {
+    background: rgb(2, 0, 36);
+    background: #ff5f62 !important;
+    padding: 20px 10px !important;
+    color: white;
+    border: none;
+    font-family: 'Poppins';
+    font-weight: 600;
+    letter-spacing: 1px;
+    width: 30% !important;
+    text-transform: uppercase;
+    padding: 15px 10px !important;
+    font-size: 20px !important;
+    letter-spacing: 1px !important;
+    margin-top: 30px !important;
+    }
 .btn-plus {
   background: rgb(2, 0, 36);
   background: #183f7e !important;
