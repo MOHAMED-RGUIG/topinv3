@@ -266,7 +266,7 @@ useEffect(() => {
         handleInputCodeChange({ target: { value: scanResult } });
     }
 }, [scanResult]);
-  
+/*la derniere ... 
  const handleQtChange = (id, value) => {
       if (!isNaN(value) && value >= 0) {
         const updatedData = localData.map((item) =>
@@ -274,7 +274,7 @@ useEffect(() => {
         );
         setLocalData(updatedData);
       } else {
-        console.log("Valeur invalide pour Qt.");}};
+        console.log("Valeur invalide pour Qt.");}};*/
     // Gestion du popup
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -323,7 +323,7 @@ const handleAddQt = () => {
     alert("Expression invalide. Veuillez réessayer.");
   }
 };*/
-
+/*la derniere...
 const handleAddQt = () => {
   try {
     // Évaluer l'expression saisie dans l'input
@@ -350,8 +350,47 @@ const handleAddQt = () => {
   }
 };
 
+*/
+/*new start*/
+const handleQtChange = (id, value) => {
+  if (!isNaN(value) && value >= 0) {
+    const updatedData = localData.map((item) =>
+      item.STOCOU_0 === id ? { ...item, Qt: Number(value) } : item
+    );
+    setLocalData(updatedData);
+  } else {
+    console.log("Valeur invalide pour Qt.");
+  }
+};
+
+const handleAddQt = () => {
+  try {
+    // Évaluer l'expression saisie dans l'input
+    const evaluatedValue = eval(additionalQt.trim());
+
+    // Vérification si le résultat est un nombre
+    if (typeof evaluatedValue !== "number" || isNaN(evaluatedValue)) {
+      alert("Veuillez entrer une expression mathématique valide.");
+      return;
+    }
+
+    // Mettre à jour les données locales avec la nouvelle quantité
+    const updatedData = localData.map((item) =>
+      item.STOCOU_0 === selectedItemId
+        ? { ...item, Qt: Number(item.Qt) + evaluatedValue } // Conversion explicite
+        : item
+    );
+
+    setLocalData(updatedData); // Mise à jour de l'état
+    closePopup(); // Fermer la popup
+  } catch (error) {
+    // Gestion des erreurs
+    alert("Expression invalide. Veuillez réessayer.");
+  }
+};
 
 
+  /* new end*/
     useEffect(() => {
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
