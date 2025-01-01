@@ -589,6 +589,7 @@ readOnly={EANCOD_0.trim() !== ''}
   ))} 
 </div>
       {/* Popup */}
+{/*
       {isPopupOpen && (
   <div
     className="position-fixed top-0 left-0 w-60 h-100 popup bg-opacity-50 d-flex justify-content-center align-items-center"
@@ -618,7 +619,32 @@ id="expression"
       </div>
     </div>
   </div>
+)} */
+  {isPopupOpen && (
+  <div
+    className="position-fixed top-0 left-0 w-60 h-100 popup bg-opacity-50 d-flex justify-content-center align-items-center"
+  >
+    <div className="p-4 rounded popup-details border w-100">
+      <h3 className="text-lg font-bold mb-2">Ajouter une quantité</h3>
+      <input
+        type="text" // Permet les expressions comme "5+2"
+        placeholder="Entrez une quantité ou une expression"
+        className="form-control mb-4"
+        value={additionalQt}
+        onChange={(e) => setAdditionalQt(e.target.value)}
+      />
+      <div className="d-flex justify-content-end">
+        <button onClick={closePopup} className="btn5 btn-secondary me-2">
+          Annuler
+        </button>
+        <button onClick={handleAddQt} className="btn5 btn-primary">
+          Ajouter
+        </button>
+      </div>
+    </div>
+  </div>
 )}
+
                 <div className="text-right mb-2">
   <button
     onClick={(e) => addNewRow(e)}
