@@ -28,13 +28,14 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData, resetInputs }) {
                 autoClose: 3000,
                 hideProgressBar: false
             });
+            resetInputs();
         } else {
             toast.error('Oops ! Merci de remplir le formulaire et d’ajouter des lignes !', {
                 position: 'bottom-right',
                 autoClose: 3000,
                 hideProgressBar: false
             });
-            resetInputs();
+            
         }
     }
 
