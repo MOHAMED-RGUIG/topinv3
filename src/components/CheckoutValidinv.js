@@ -8,7 +8,7 @@ import Error from '../components/Error';
 import Success from '../components/Success';
 import emailjs from 'emailjs-com';
 
-function CheckoutValidinv({ REFINV_0, ITMREF_0, localData }) {
+function CheckoutValidinv({ REFINV_0, ITMREF_0, localData, resetInputs }) {
     const validinvinsertstate = useSelector(state => state.validInvReducer);
     const { loading, error, success } = validinvinsertstate;
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -34,6 +34,7 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData }) {
                 autoClose: 3000,
                 hideProgressBar: false
             });
+            resetInputs();
         }
     }
 
