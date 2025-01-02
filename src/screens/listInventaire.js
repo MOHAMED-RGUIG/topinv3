@@ -240,7 +240,7 @@ function ListInventaire() {
     style={{ width: '90%', fontSize: '13px' }}
 >
     <option value="" disabled>Choisir l'état d'inventaire</option>
-    <option value="En création">En création</option>
+    <option value="ouvert">En création</option>
     <option value="Cloturée">Cloturée</option>
     <option value="Annulé">Annulé</option>
 </select>
