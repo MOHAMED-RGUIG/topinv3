@@ -181,7 +181,7 @@ const handleInputCodeChange = (e) => {
       Qt: '' // Valeur initiale pour Quantité
     };
     // Ajouter la nouvelle ligne en haut
-    setLocalData([newRow, ...localData]);
+    setLocalData([ ...localData,newRow]);
   };
  const deleteRow = (id) => {
     const updatedData = localData.filter((item) => item.STOCOU_0 !== id);
