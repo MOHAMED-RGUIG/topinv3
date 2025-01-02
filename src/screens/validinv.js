@@ -405,7 +405,13 @@ const handleAddQt = () => {
     const [EANCOD_0, setEANCOD_0] = useState('');
     const [DESINV, setDESINV] = useState('');
   
- 
+ const resetInputs = () => {
+        setREFINV_0('');
+        setITMREF_0('');
+   setEANCOD_0('');
+        setLocalData([]);
+    };
+
      useEffect(() => {
     if (EANCOD_0.trim() !== "") {
       const matchedItem = localData.find((item) => item.EANCOD_0 === EANCOD_0);
@@ -740,6 +746,7 @@ id="expression"
     REFINV_0={REFINV_0}
     ITMREF_0={ITMREF_0}
     localData={localData}
+      resetInputs={resetInputs}
 />
                     </div>
                 </div>
