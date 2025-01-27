@@ -263,10 +263,10 @@ const handleAddQt = () => {
       if (matchedItem) {
         setITMREF_0(matchedItem.ITMREF_0); // Remplit avec itmref trouvé
       } else {
-        setITMREF_0(""); // Réinitialise si aucune correspondance
+       
       }
     } else {
-      setITMREF_0(""); // Réinitialise si Code-barre est vide
+     
     }
   }, [EANCOD_0, localData]);
 
