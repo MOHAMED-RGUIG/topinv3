@@ -1,67 +1,10 @@
 import React, {useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToCart, deleteFromCart } from '../actions/cartActions';
 import CheckoutValidinv from '../components/CheckoutValidinv';
 import { debounce } from 'lodash';
 import { getFilteredValidInv,getFilteredValidInvByCode,getInv}  from '../actions/validInvAction';
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import   QrReader  from "react-qr-barcode-scanner";
 import { Html5Qrcode } from "html5-qrcode";
-import { FaCalculator } from "react-icons/fa";
-//import { Html5QrcodeScanner } from "html5-qrcode";
-
-function Calculator({ onValidate, stocou, initialValue }) {
-  const [value, setValue] = useState(initialValue || ""); // Set initial value for the input field
-
-  const handleButtonClick = (e, buttonValue) => {
-    e.preventDefault();
-    if (buttonValue === "=") {
-      try {
-        setValue(eval(value).toString());
-      } catch {
-        setValue("Error");
-      }
-    } else if (buttonValue === "C") {
-      setValue("");
-    } else {
-      setValue(value + buttonValue);
-    }
-  };
-
-  return (
-    <div className="calculator-popup">
-      <div className="calculator-display">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)} // Allow user to input directly
-        />
-      </div>
-      <div className="calculator-buttons">
-        {["1", "2", "3", "+", "4", "5", "6", "-", "7", "8", "9", "*", "C", "0", "=", "/"].map((btn) => (
-          <button
-            key={btn}
-            type="button"
-            onClick={(e) => handleButtonClick(e, btn)}
-          >
-            {btn}
-          </button>
-        ))}
-      </div>
-      <button
-        className="validate-button"
-        type="button"
-        onClick={() => {
-          onValidate(value, stocou); // Validate the quantity for the specific item (stocou)
-        }}
-      >
-        Valider
-      </button>
-    </div>
-  );
-}
-
 
 function Validinv() {
     const dispatch = useDispatch();
@@ -73,17 +16,11 @@ function Validinv() {
     const { getinv } = getInvState;
     const { validinv, error, loading } = validInvstate; 
     const {validinvcode} = validInvCodestate;
-    const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-    const [quantity, setQuantity] = useState("");
-    const [quantities, setQuantities] = useState({});
-    const [calculatorItem, setCalculatorItem] = useState(null);
-    const [QTYINV_0, setQTYINV_0] = useState({});
-
+  
 
     const [isScannerActive, setIsScannerActive] = useState(false);
  const [scanResult, setScanResult] = useState('');
-  const [isScanning, setIsScanning] = useState(false);
-const [scanner, setScanner] = useState(null);
+
 useEffect(() => {
         let html5QrCode;
 
@@ -123,13 +60,7 @@ useEffect(() => {
       if (value.trim().length >= 3) {
           dispatch(getFilteredValidInv(value));}
   }, 500);
-  const handleValidate = (finalValue, stocou) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [stocou]: (Number(prevQuantities[stocou] || 0) + Number(finalValue)), // Ajoute la nouvelle valeur à l'existante
-    }));
-    setIsCalculatorOpen(false); // Ferme la calculatrice après validation
-  };
+
 const handlechangeresult = (e) => {
         const value = e.target.value;
         setScanResult(value);
@@ -140,21 +71,46 @@ const handlechangeresult = (e) => {
       setITMREF_0(value);
       debouncedDispatch(value);
   };
-
-  const toggleCalculator = (stocou) => {
-    setCalculatorItem(stocou);  // Track which item the calculator is open for
-    setIsCalculatorOpen((prev) => !prev);  // Toggle the calculator state
-  };
+ 
   
+  const handleInvSelection = async (refInv, itmref) => {
+    setREFINV_0(refInv); // Mettez à jour l'inventaire sélectionné
+    try {
+        // Inclure le paramètre itmref dans la requête API
+        const response = await fetch(
+            `http://localhost:5000/api/validinv/getExistingDataForInv?refInv=${refInv}&itmref=${itmref}`
+        );
+
+        const existingData = await response.json();
+
+        if (existingData && existingData.length > 0) {
+            const updatedLocalData = localData.map((item) => {
+                // Chercher une correspondance dans les données existantes
+                const match = existingData.find(
+                    (data) =>
+                        data.ITMREF_0 === item.ITMREF_0 &&
+                        data.LOT_0 === item.LOT_0 &&
+                        data.STOFCY_0 === item.STOFCY_0
+                );
+                // Mettre à jour Qt si une correspondance est trouvée
+                return match ? { ...item, Qt: match.QTYINV_0 } : item;
+            });
+
+            setLocalData(updatedLocalData);
+            console.log("Données existantes pour l'inventaire :", existingData);
+        } else {
+            console.log("Aucune donnée correspondante trouvée pour cet inventaire.");
+        }
+    } catch (error) {
+        console.error("Erreur lors de la récupération des données existantes :", error);
+    }
+};
+
   const debouncedCodeDispatch = debounce((value) => {
     if (value.trim().length >= 3) {
         dispatch(getFilteredValidInvByCode(value));}
 }, 500);
-/*const handlechangeresult = (e) => {
-        const value = e.target.value;
-        setScanResult(value);
-        setEANCOD_0(value);
-    };*/
+
  //la derniere   
 const handleInputCodeChange = (e) => {
     const value = e.target.value;
@@ -167,7 +123,7 @@ const handleInputCodeChange = (e) => {
     if (matchedItem) {
         setITMREF_0(matchedItem.ITMREF_0);
     } else {
-        setITMREF_0(''); // Réinitialise si aucun article ne correspond
+      
     }
 
     debouncedCodeDispatch(value);
@@ -208,20 +164,6 @@ useEffect(() => {
   }
 }, [validinv]);
 
-   /*useEffect(() => {
-      if (validinv) {
-        // Copier les données pour un état local modifiable
-        setLocalData(validinv.map((item) => ({ ...item, Qt: item.Qt || '' })));
-      };     
-    }, [validinv]);
-    useEffect(() => {
-      if (validinvcode) {
-        // Copier les données pour un état local modifiable
-        setLocalData(validinvcode.map((item) => ({ ...item, Qt: item.Qt || '' })));
-      };     
-    }, [validinvcode]);*/
-
-
     useEffect(() => {
       if (validinvcode) {
         // Copier les données pour un état local modifiable
@@ -232,49 +174,12 @@ useEffect(() => {
       dispatch(getInv());
   }, [dispatch]);
 
-  /*const handleQtChange = (stocou, value) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [stocou]: value, // Update the value for the specific item
-    }));
-  };*/
-    // Gestion du popup
-  /*const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [selectedItemId, setSelectedItemId] = useState(null);
-    const [additionalQt, setAdditionalQt] = useState(""); 
-    const openPopup = (id) => {
-      setSelectedItemId(id);
-      setIsPopupOpen(true);};  
-
-    const closePopup = () => {
-      setIsPopupOpen(false);
-      setAdditionalQt("");};  
-*/
-    /*const handleAddQt = () => {
-      const updatedData = localData.map((item) =>
-        item.STOCOU_0 === selectedItemId
-          ? { ...item, Qt: item.Qt + Number(additionalQt) }
-          : item
-      );
-      setLocalData(updatedData);
-      closePopup();
-    };
-*/
-
     useEffect(() => {
     if (scanResult) {
         handleInputCodeChange({ target: { value: scanResult } });
     }
 }, [scanResult]);
-/*la derniere ... 
- const handleQtChange = (id, value) => {
-      if (!isNaN(value) && value >= 0) {
-        const updatedData = localData.map((item) =>
-          item.STOCOU_0 === id ? { ...item, Qt: Number(value) } : item
-        );
-        setLocalData(updatedData);
-      } else {
-        console.log("Valeur invalide pour Qt.");}};*/
+
     // Gestion du popup
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [selectedItemId, setSelectedItemId] = useState(null);
@@ -286,71 +191,7 @@ useEffect(() => {
     const closePopup = () => {
       setIsPopupOpen(false);
       setAdditionalQt("");};  
-/*
-    const handleAddQt = () => {
-      const updatedData = localData.map((item) =>
-        item.STOCOU_0 === selectedItemId
-          ? { ...item, Qt: item.Qt + eval(Number(additionalQt).toString()) }
-          : item
-      );
-      setLocalData(updatedData);
-      closePopup();
-    };*/
-  /*
-const handleAddQt = () => {
-  try {
-    console.log("Expression saisie :", additionalQt);
 
-    // Évaluer l'expression saisie
-    const evaluatedValue = eval(additionalQt);
-    console.log("Résultat évalué :", evaluatedValue);
-
-    if (isNaN(evaluatedValue)) {
-      alert("Veuillez entrer une quantité valide.");
-      return;
-    }
-
-    const updatedData = localData.map((item) =>
-      item.STOCOU_0 === selectedItemId
-        ? { ...item, Qt: item.Qt + Number(evaluatedValue) }
-        : item
-    );
-
-    setLocalData(updatedData);
-    closePopup();
-  } catch (error) {
-    console.error("Erreur lors de l'évaluation :", error);
-    alert("Expression invalide. Veuillez réessayer.");
-  }
-};*/
-/*la derniere...
-const handleAddQt = () => {
-  try {
-    // Évaluer l'expression saisie dans l'input
-    const evaluatedValue = eval(additionalQt.trim());
-
-    // Vérification si le résultat est un nombre
-    if (typeof evaluatedValue !== "number" || isNaN(evaluatedValue)) {
-      alert("Veuillez entrer une expression mathématique valide.");
-      return;
-    }
-
-    // Mettre à jour les données locales avec la nouvelle quantité
-    const updatedData = localData.map((item) =>
-      item.STOCOU_0 === selectedItemId
-        ? { ...item, Qt: item.Qt + evaluatedValue }
-        : item
-    );
-
-    setLocalData(updatedData); // Mise à jour de l'état
-    closePopup(); // Fermer la popup
-  } catch (error) {
-    // Gestion des erreurs
-    alert("Expression invalide. Veuillez réessayer.");
-  }
-};
-
-*/
 /*new start*/
 const handleQtChange = (id, value) => {
   if (!isNaN(value) && value >= 0) {
@@ -411,7 +252,11 @@ const handleAddQt = () => {
    setEANCOD_0('');
         setLocalData([]);
     };
-
+    useEffect(() => {
+      if (REFINV_0, ITMREF_0) {
+        handleInvSelection(REFINV_0, ITMREF_0);
+      }
+    }, [REFINV_0]);
      useEffect(() => {
     if (EANCOD_0.trim() !== "") {
       const matchedItem = localData.find((item) => item.EANCOD_0 === EANCOD_0);
@@ -491,24 +336,24 @@ const handleAddQt = () => {
             
     {/* Select Inventaire */}
     <select
-        className="form-control mt-2 col-xl-10 col-10 col-md-10"
-        value={REFINV_0}
-        onChange={(e) => setREFINV_0(e.target.value)}
-        style={{ width: '90%', fontSize: '13px' }}
-    >
-        <option value="" disabled>
-            Sélectionnez un inventaire
-        </option>
-        {getinv && getinv.length > 0 ? (
-            getinv.map((inv, index) => (
-                <option key={index} value={inv.REFINV_0}>
-                    {inv.DESINV_0}
-                </option>
-            ))
-        ) : (
-            <option disabled>Aucun inventaire disponible</option>
-        )}
-    </select>
+    className="form-control mt-2 col-xl-10 col-10 col-md-10"
+    value={REFINV_0}
+    onChange={(e) => handleInvSelection(e.target.value)}
+    style={{ width: '90%', fontSize: '13px' }}
+>
+    <option value="" disabled>
+        Sélectionnez un inventaire
+    </option>
+    {getinv && getinv.length > 0 ? (
+        getinv.map((inv, index) => (
+            <option key={index} value={inv.REFINV_0}>
+                {inv.DESINV_0}
+            </option>
+        ))
+    ) : (
+        <option disabled>Aucun inventaire disponible</option>
+    )}
+</select>
 
                           <input
                 
@@ -550,17 +395,11 @@ readOnly={EANCOD_0.trim() !== ''}
       </ul>
 
       {/* Button to open the calculator */}
-      
-
-
-      
+    
                 </div>
  
                  </div>
-                
-
-                               
-                
+                                    
 <div className='container'>
 {localData.map((item) => (
 <div className='row lot-details' key={item.STOCOU_0}>
@@ -593,44 +432,6 @@ readOnly={EANCOD_0.trim() !== ''}
           style={{ width: "90%", fontSize: "13px" }}
         />
   </div>
-{/*<label>Quantité</label>
-  <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
-  
-  <input
-  type="number"
-  value={quantities[item.STOCOU_0]}  // Défaut à vide si aucune valeur
-  onChange={(e) => handleQtChange(item.QTYINV_0, e.target.value)}
-  className="form-control mx-auto border p-1"
-  style={{ width: "90%", fontSize: "13px" }}
-/>
-
-
-{isCalculatorOpen && (
-  <Calculator
-    onValidate={(finalValue, stocou) => handleValidate(finalValue, stocou)}
-    stocou={calculatorItem} 
-    
-    // Pass the current item's identifier
-  />
-)}
-
-<button
-    type="button" className='calculator pt-4 mt-4'
-    onClick={() => toggleCalculator(item.STOCOU_0)}
-    style={{ width: "15%", height:"60px",fontSize: "15px" }}
-  >
-    
-  </button>
-  <button
-    type='button'
-    onClick={() => openPopup(item.STOCOU_0)}
-    className="btn-plus bg-red-500 text-white"
-    style={{ width: "10%", marginLeft: "8px", padding: "0" }}
-  >
-    +
-  </button> 
-  
-</div>*/}
 <label>Quantité</label>
   <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
   <input
@@ -669,38 +470,7 @@ readOnly={EANCOD_0.trim() !== ''}
   </div>
   ))} 
 </div>
-      {/* Popup */}
-{/*
-      {isPopupOpen && (
-  <div
-    className="position-fixed top-0 left-0 w-60 h-100 popup bg-opacity-50 d-flex justify-content-center align-items-center"
-    
->
-    <div className="p-4 rounded popup-details border w-100">
-      <h3 className="text-lg font-bold mb-2">Ajouter une quantité</h3>
-      <input
-        type="number"
-        placeholder="Entrez une quantité"
-id="expression"
-        className="form-control mb-4"
-        value={additionalQt}
-        onChange={(e) => setAdditionalQt(e.target.value)}
-      />
-      <div className="d-flex justify-content-end">
-        <button
-          onClick={closePopup}
-          className="btn5 btn-secondary me-2">
-          Annuler
-        </button>
-        <button
-          onClick={handleAddQt}
-          className="btn5 btn-primary">
-            Ajouter
-        </button>
-      </div>
-    </div>
-  </div>
-)} */}
+  
   {isPopupOpen && (
   <div
     className="position-fixed top-0 left-0 w-60 h-100 popup bg-opacity-50 d-flex justify-content-center align-items-center"
