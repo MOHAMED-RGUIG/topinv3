@@ -16,7 +16,7 @@ function Validinv() {
     const { getinv } = getInvState;
     const { validinv, error, loading } = validInvstate; 
     const {validinvcode} = validInvCodestate;
-  
+  const [scanner, setScanner] = useState(null);
 
     const [isScannerActive, setIsScannerActive] = useState(false);
  const [scanResult, setScanResult] = useState('');
