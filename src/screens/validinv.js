@@ -78,7 +78,7 @@ const handlechangeresult = (e) => {
     try {
         // Inclure le paramètre itmref dans la requête API
         const response = await fetch(
-            `http://localhost:5000/api/validinv/getExistingDataForInv?refInv=${refInv}&itmref=${itmref}`
+            `https://topinvapi2.onrender.com/api/validinv/getExistingDataForInv?refInv=${refInv}&itmref=${itmref}`
         );
 
         const existingData = await response.json();
