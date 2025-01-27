@@ -16,7 +16,7 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData, resetInputs }) {
     const dispatch = useDispatch();
 
     function tokenHandler() {
-        if (REFINV_0 && ITMREF_0 ) {
+
             const payload = {
                 REFINV_0,
                 ITMREF_0,
@@ -29,14 +29,6 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData, resetInputs }) {
                 hideProgressBar: false
             });
             resetInputs();
-        } else {
-            toast.error('Oops ! Merci de remplir le formulaire et d’ajouter des lignes !', {
-                position: 'bottom-right',
-                autoClose: 3000,
-                hideProgressBar: false
-            });
-            
-        }
     }
 
     return (
