@@ -291,15 +291,17 @@ const handleAddQt = () => {
       return null; // Ignore unlisted fields
     });
   };
-    const [qt, setQt] = useState(""); // État pour la valeur de l'input
-  const [isDisabled, setIsDisabled] = useState(false); // État pour gérer le disabled
+   const [disabledInputs, setDisabledInputs] = useState({}); // Stocke les inputs désactivés
 
   useEffect(() => {
-    // Désactiver seulement si item.Qt a déjà une valeur au premier chargement
-    if (item.Qt && item.Qt !== "") {
-      setIsDisabled(true);
-    }
-  }, [item.Qt]); // Exécuté une seule fois au montage
+    // Crée un objet avec les valeurs initiales de Qt pour chaque item
+    const initialDisabledState = {};
+    localData.forEach((item) => {
+      initialDisabledState[item.STOCOU_0] = item.Qt && item.Qt !== ""; // Désactive si Qt non vide
+    });
+    setDisabledInputs(initialDisabledState);
+  }, [localData]); // Exécuté au chargement
+
 
     return (
         <div className='container col-xl-12 col-md-12 col-12 mx-auto cart-details'>
@@ -444,13 +446,13 @@ readOnly={EANCOD_0.trim() !== ''}
 <label>Quantité</label>
   <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
  <input
-      type="number"
-      value={qt}
-      onChange={(e) => setQt(e.target.value)}
-      className="form-control mx-auto border p-1"
-      style={{ width: "90%", fontSize: "13px" }}
-      disabled={isDisabled} // Désactivé si item.Qt était non vide au chargement
-    />
+              type="number"
+              value={item.Qt}
+              onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
+              className="form-control mx-auto border p-1"
+              style={{ width: "90%", fontSize: "13px" }}
+              disabled={disabledInputs[item.STOCOU_0]} // Désactive si Qt était non vide au chargement
+            />
 
 
 {/*
