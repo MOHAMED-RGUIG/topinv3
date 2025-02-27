@@ -291,7 +291,7 @@ const handleAddQt = () => {
       return null; // Ignore unlisted fields
     });
   };
-    const [qt, setQt] = useState(item.Qt || ""); // État pour la valeur de l'input
+    const [qt, setQt] = useState(""); // État pour la valeur de l'input
   const [isDisabled, setIsDisabled] = useState(false); // État pour gérer le disabled
 
   useEffect(() => {
