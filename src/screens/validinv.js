@@ -291,16 +291,7 @@ const handleAddQt = () => {
       return null; // Ignore unlisted fields
     });
   };
-   const [disabledInputs, setDisabledInputs] = useState({}); // Stocke les inputs désactivés
-
-  useEffect(() => {
-    // Crée un objet avec les valeurs initiales de Qt pour chaque item
-    const initialDisabledState = {};
-    localData.forEach((item) => {
-      initialDisabledState[item.STOCOU_0] = item.Qt && item.Qt !== ""; // Désactive si Qt non vide
-    });
-    setDisabledInputs(initialDisabledState);
-  }, [localData]); // Exécuté au chargement
+   
 
 
     return (
@@ -451,7 +442,7 @@ readOnly={EANCOD_0.trim() !== ''}
               onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
               className="form-control mx-auto border p-1"
               style={{ width: "90%", fontSize: "13px" }}
-              disabled={disabledInputs[item.STOCOU_0]} // Désactive si Qt était non vide au chargement
+             disabled={true}
             />
 
 
