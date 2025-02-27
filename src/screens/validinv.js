@@ -253,7 +253,7 @@ const handleAddQt = () => {
         setLocalData([]);
     };
     useEffect(() => {
-      if (REFINV_0, ITMREF_0) {
+      if (REFINV_0 && ITMREF_0) {
         handleInvSelection(REFINV_0, ITMREF_0);
       }
     }, [REFINV_0]);
