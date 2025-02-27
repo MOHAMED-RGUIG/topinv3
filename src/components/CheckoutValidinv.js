@@ -34,7 +34,7 @@ function CheckoutValidinv({ REFINV_0, ITMREF_0, localData, resetInputs }) {
     return (
         <div className='col-12 col-md-12 text-center justify-content-end'>
             {loading && (<Loading />)}
-            {error && (<Error error='' />)}
+         
             {success && (<Success success='Votre inventaire a été ajouté avec succès' />)}
             <button className='btn5 col-11 col-md-11 mt-2 p-2' onClick={tokenHandler}>
                 Valider
