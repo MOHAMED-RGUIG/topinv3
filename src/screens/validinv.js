@@ -256,7 +256,7 @@ const handleAddQt = () => {
       if (REFINV_0 && ITMREF_0) {
         handleInvSelection(REFINV_0);
       }
-    }, [REFINV_0,ITMREF_0]);
+    }, [REFINV_0]);
      useEffect(() => {
     if (EANCOD_0.trim() !== "") {
       const matchedItem = localData.find((item) => item.EANCOD_0 === EANCOD_0);
