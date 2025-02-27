@@ -72,7 +72,7 @@ const handlechangeresult = (e) => {
       debouncedDispatch(value);
   };
  
-  
+  /*
   const handleInvSelection = async (refInv, itmref) => {
     setREFINV_0(refInv); // Mettez à jour l'inventaire sélectionné
     try {
@@ -105,7 +105,39 @@ const handlechangeresult = (e) => {
         console.error("Erreur lors de la récupération des données existantes :", error);
     }
 };
+*/
+const handleInvSelection = async (refInv, itmref) => {
+    setREFINV_0(refInv); // Update the selected inventory
+    try {
+        // Include the itmref parameter in the API request
+        const response = await fetch(
+            `https://topinvapi2.onrender.com/api/validinv/getExistingDataForInv?refInv=${refInv}&itmref=${itmref}`
+        );
 
+        const existingData = await response.json();
+
+        if (existingData && existingData.length > 0) {
+            const updatedLocalData = localData.map((item) => {
+                // Find a match in the existing data
+                const match = existingData.find(
+                    (data) =>
+                        data.ITMREF_0 === item.ITMREF_0 &&
+                        data.LOT_0 === item.LOT_0 &&
+                        data.STOFCY_0 === item.STOFCY_0
+                );
+                // Update Qt if a match is found
+                return match ? { ...item, Qt: match.QTYINV_0 } : item;
+            });
+
+            setLocalData(updatedLocalData);
+            console.log("Existing data for inventory:", existingData);
+        } else {
+            console.log("No matching data found for this inventory.");
+        }
+    } catch (error) {
+        console.error("Error fetching existing data:", error);
+    }
+};
   const debouncedCodeDispatch = debounce((value) => {
     if (value.trim().length >= 3) {
         dispatch(getFilteredValidInvByCode(value));}
