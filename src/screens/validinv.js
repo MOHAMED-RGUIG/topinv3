@@ -436,17 +436,8 @@ readOnly={EANCOD_0.trim() !== ''}
   </div>
 <label>Quantité</label>
   <div style={{ display: "flex", alignItems: "center", width: "100%", marginLeft: "15px" }}>
- <input
-              type="number"
-              value={item.Qt}
-              onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
-              className="form-control mx-auto border p-1"
-              style={{ width: "90%", fontSize: "13px" }}
-             disabled={true}
-            />
 
 
-{/*
 
 <input
     type="number"
@@ -454,8 +445,9 @@ readOnly={EANCOD_0.trim() !== ''}
     onChange={(e) => handleQtChange(item.STOCOU_0, e.target.value)}
     className="form-control mx-auto border p-1"
     style={{ width: "90%", fontSize: "13px" }}
+ disabled={true}
   />
-*/}
+
 
   <button
     type='button'
