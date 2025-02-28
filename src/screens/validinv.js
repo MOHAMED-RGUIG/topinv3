@@ -287,18 +287,14 @@ const handleAddQt = () => {
         setLocalData([]);
     };
 
-useEffect(() => {
-    if (REFINV_0 && ITMREF_0) {
-        handleInvSelection(REFINV_0, ITMREF_0);
-    }
-}, [REFINV_0, ITMREF_0, handleInvSelection]); // Ajoutez handleInvSelection aux dépendances
-/*
+
+
 useEffect(() => {
     if (REFINV_0 && ITMREF_0) {
         handleInvSelection(REFINV_0, ITMREF_0);
     }
 }, [REFINV_0, ITMREF_0]);
-  */
+  
 /* 
   useEffect(() => {
       if (REFINV_0 && ITMREF_0) {
