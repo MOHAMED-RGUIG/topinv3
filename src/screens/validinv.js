@@ -386,7 +386,7 @@ useEffect(() => {
     <select
     className="form-control mt-2 col-xl-10 col-10 col-md-10"
     value={REFINV_0}
-    onChange={(e) => handleInvSelection(e.target.value)}
+    onChange={(e) => handleInvSelection(e.target.value, ITMREF_0)}
     style={{ width: '90%', fontSize: '13px' }}
 >
     <option value="" disabled>
