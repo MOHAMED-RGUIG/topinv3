@@ -290,6 +290,7 @@ const handleAddQt = () => {
 
 
 useEffect(() => {
+console.log("REFINV_0 :", REFINV_0, "ITMREF_0 :", ITMREF_0);
     if (REFINV_0 && ITMREF_0) {
         handleInvSelection(REFINV_0, ITMREF_0);
     }
