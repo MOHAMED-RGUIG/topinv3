@@ -81,7 +81,8 @@ const handleInvSelection = async (refInv, itmref) => {
 
         const existingData = await response.json();
 
-        if (existingData && existingData.length > 0) {
+console.log("Données retournées par l'API :", existingData);
+        /*if (existingData && existingData.length > 0) {
             const updatedLocalData = localData.map((item) => {
                 // Chercher une correspondance dans les données existantes
                 const match = existingData.find(
@@ -98,7 +99,22 @@ const handleInvSelection = async (refInv, itmref) => {
             console.log("Données existantes pour l'inventaire :", existingData);
         } else {
             console.log("Aucune donnée correspondante trouvée pour cet inventaire.");
-        }
+        } */
+
+if (existingData.data && existingData.data.length > 0) {
+    const updatedLocalData = localData.map((item) => {
+        const match = existingData.data.find(
+            (data) =>
+                data.ITMREF_0 === item.ITMREF_0 &&
+                data.LOT_0 === item.LOT_0 &&
+                data.STOFCY_0 === item.STOFCY_0
+        );
+        return match ? { ...item, Qt: match.QTYINV_0 } : item;
+    });
+    setLocalData(updatedLocalData);
+    console.log("Données existantes pour l'inventaire :", existingData.data);
+} else {
+    console.log("Aucune donnée correspondante trouvée pour cet inventaire.");
     } catch (error) {
         console.error("Erreur lors de la récupération des données existantes :", error);
     }
