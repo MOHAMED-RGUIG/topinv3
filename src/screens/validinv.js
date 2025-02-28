@@ -430,7 +430,7 @@ console.log("REFINV_0 :", REFINV_0, "ITMREF_0 :", ITMREF_0);
                 type='text'
                 placeholder='Code article'
                 className='form-control col-xl-10 col-10 col-md-10 input-itmref'
-                value={ITMREF_0}
+                value={ITMREF_0.toUpperCase()}
                 onChange={handleInputChange}
 readOnly={EANCOD_0.trim() !== ''}
             />   
