@@ -286,12 +286,28 @@ const handleAddQt = () => {
    setEANCOD_0('');
         setLocalData([]);
     };
+
+useEffect(() => {
+    const fetchData = async () => {
+        if (REFINV_0 && ITMREF_0 && REFINV_0.trim() !== "" && ITMREF_0.trim() !== "") {
+            try {
+                await handleInvSelection(REFINV_0, ITMREF_0);
+            } catch (error) {
+                console.error("Erreur dans handleInvSelection :", error);
+            }
+        }
+    };
+
+    const debounceTimer = setTimeout(fetchData, 300); // Délai de 300 ms
+    return () => clearTimeout(debounceTimer); // Nettoyer le timer
+}, [REFINV_0, ITMREF_0, handleInvSelection]);
+/*
 useEffect(() => {
     if (REFINV_0 && ITMREF_0) {
         handleInvSelection(REFINV_0, ITMREF_0);
     }
 }, [REFINV_0, ITMREF_0]);
-  
+  */
 /* 
   useEffect(() => {
       if (REFINV_0 && ITMREF_0) {
