@@ -115,7 +115,7 @@ if (existingData.data && existingData.data.length > 0) {
     console.log("Données existantes pour l'inventaire :", existingData.data);
 } else {
     console.log("Aucune donnée correspondante trouvée pour cet inventaire.");
-    } catch (error) {
+}} catch (error) {
         console.error("Erreur lors de la récupération des données existantes :", error);
     }
 };
