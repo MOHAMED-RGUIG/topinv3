@@ -89,7 +89,7 @@ console.log("Données retournées par l'API :", existingData);
                     (data) =>
                         data.ITMREF_0 === item.ITMREF_0 &&
                         data.LOT_0 === item.LOT_0 &&
-                        data.STOFCY_0 === item.STOCOU_0
+                        data.STOFCY_0 === item.STOFCY_0
                 );
                 // Mettre à jour Qt si une correspondance est trouvée
                 return match ? { ...item, Qt: match.QTYINV_0 } : item;
